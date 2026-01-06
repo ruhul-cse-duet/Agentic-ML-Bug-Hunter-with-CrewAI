@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Agentic ML Bug Hunter | AI-Powered Debugging</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background animation -->
+    <div class="background-animation"></div>
+    
+<!--    &lt;!&ndash; Ollama Status Indicator &ndash;&gt;-->
+<!--    <div class="status-indicator" id="ollamaStatus">-->
+<!--        <span class="status-dot"></span>-->
+<!--        <span class="status-text">Checking Ollama...</span>-->
+<!--    </div>-->
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">Agentic ML Bug Hunter</span>
+                <span class="badge">v1.0</span>
+            </div>
+            <div class="subtitle">
+                <span class="subtitle-icon">⚡</span>
+                Powered by CrewAI & ollama/qwen2.5-coder:3b | Running Locally
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Info Cards -->
+            <div class="info-cards">
+                <div class="info-card">
+                    <div class="card-icon">🔍</div>
+                    <h3>Runtime Analysis</h3>
+                    <p>Detect CUDA, tensor, and memory errors instantly</p>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">🧩</div>
+                    <h3>Logic Review</h3>
+                    <p>Find silent bugs in ML architecture & training</p>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Performance</h3>
+                    <p>Optimize speed, memory, and GPU utilization</p>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">🔧</div>
+                    <h3>Auto Fix</h3>
+                    <p>Generate production-ready code patches</p>
+                </div>
+            </div>
+
+            <!-- Code Input Form -->
+            <div class="code-section">
+                <div class="section-header">
+                    <h2>
+                        <span class="section-icon">📝</span>
+                        Code Analysis
+                    </h2>
+                    <p class="section-subtitle">Paste your ML code or error logs below for AI-powered debugging</p>
+                </div>
+                
+                <form method="post" action="/analyze" id="analyzeForm">
+                    <div class="form-group">
+                        <textarea 
+                            name="code" 
+                            id="code"
+                            placeholder="# Example: Paste PyTorch code with potential issues
+import torch
+import torch.nn as nn
+
+class MyModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 64, kernel_size=3, padding=1)
+        self.fc = nn.Linear(64, 10)  # Check dimensions!
+    
+    def forward(self, x):
+        # Input: (batch, 3, 224, 224)
+        x = self.conv1(x)  # Output: (batch, 64, 224, 224)
+        x = self.fc(x)     # Will this work? 🤔
+        return x
+
+# Can you spot the bug?"
+                            required
+                        ></textarea>
+                        <div class="textarea-footer">
+                            <span class="char-count">0 characters</span>
+                            <span class="tip">💡 Tip: Include error tracebacks for better analysis</span>
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-primary" id="analyzeBtn">
+                            <span class="btn-icon">🚀</span>
+                            <span class="btn-text">Analyze with AI</span>
+                            <span class="btn-spinner"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="clearForm()">
+                            <span class="btn-icon">🗑️</span>
+                            <span class="btn-text">Clear</span>
+                        </button>
+                        <button type="button" class="btn btn-tertiary" onclick="loadExample()">
+                            <span class="btn-icon">💡</span>
+                            <span class="btn-text">Load Example</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Loading Animation -->
+            <div class="loading" id="loading" style="display: none;">
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <h3>🤖 AI Agents at Work</h3>
+                    <p class="loading-message">Analyzing your code with advanced AI...</p>
+                    
+                    <div class="loading-steps">
+                        <div class="step" id="step1">
+                            <span class="step-number">1</span>
+                            <div class="step-content">
+                                <span class="step-icon">🔍</span>
+                                <span class="step-title">Runtime Analysis</span>
+                                <span class="step-status">Processing...</span>
+                            </div>
+                            <div class="step-progress"></div>
+                        </div>
+                        <div class="step" id="step2">
+                            <span class="step-number">2</span>
+                            <div class="step-content">
+                                <span class="step-icon">🧩</span>
+                                <span class="step-title">Logic Review</span>
+                                <span class="step-status">Waiting...</span>
+                            </div>
+                            <div class="step-progress"></div>
+                        </div>
+                        <div class="step" id="step3">
+                            <span class="step-number">3</span>
+                            <div class="step-content">
+                                <span class="step-icon">🔧</span>
+                                <span class="step-title">Fix Generation</span>
+                                <span class="step-status">Waiting...</span>
+                            </div>
+                            <div class="step-progress"></div>
+                        </div>
+                        <div class="step" id="step4">
+                            <span class="step-number">4</span>
+                            <div class="step-content">
+                                <span class="step-icon">⚡</span>
+                                <span class="step-title">Performance Check</span>
+                                <span class="step-status">Waiting...</span>
+                            </div>
+                            <div class="step-progress"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="loading-note">
+                        <span class="note-icon">ℹ️</span>
+                        This may take 30-120 seconds depending on code complexity
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            {% if result %}
+            <div class="results-section" id="results">
+                <div class="results-header">
+                    <h2>
+                        <span class="results-icon">✨</span>
+                        Debug Report
+                        <span class="timestamp">{{ "now" }}</span>
+                    </h2>
+                    <div class="header-actions">
+                        <button class="btn btn-copy" onclick="copyResults()">
+                            <span class="btn-icon">📋</span>
+                            Copy Report
+                        </button>
+                        <button class="btn btn-download" onclick="downloadResults()">
+                            <span class="btn-icon">💾</span>
+                            Download
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="results-content">
+                    <pre id="resultContent">{{ result }}</pre>
+                </div>
+                
+                <div class="results-footer">
+                    <button class="btn btn-secondary" onclick="location.reload()">
+                        <span class="btn-icon">🔄</span>
+                        Analyze Another
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>Built with ❤️ using <strong>CrewAI</strong>, <strong>ollama/qwen2.5-coder:3b</strong>, and <strong>FastAPI</strong></p>
+                <div class="footer-links">
+                    <a href="https://github.com/crewai" target="_blank">CrewAI</a>
+                    <span>•</span>
+                    <a href="https://ollama.ai" target="_blank">Ollama</a>
+                    <span>•</span>
+                    <a href="https://fastapi.tiangolo.com" target="_blank">FastAPI</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/javascript.js"></script>
+</body>
+</html>
