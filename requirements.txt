@@ -1,0 +1,18 @@
+fastapi==0.124.0
+uvicorn[standard]==0.35.0
+crewai==1.7.2
+crewai-tools==1.7.2
+langchain>=1.1.1
+langchain-community>=0.4.1
+jinja2>=3.1.6
+python-multipart>=0.0.18
+
+# For Ollama integration
+ollama>=0.6.1
+requests
+
+# Additional dependencies
+pydantic
+pydantic-settings
+
+# python 3.11.14
